@@ -1,41 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Giardino.MainPage">
+             x:Class="Giardino.MainPage"
+             Title="">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+        <Grid x:Name="ChooseGenderPage" Grid.RowSpan="4" Grid.ColumnSpan="5" ZIndex="999" BackgroundColor="DarkSlateGrey">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                   HorizontalOptions="Center" VerticalOptions="Center"
+                   FontFamily="TorusPro" FontSize="30">
+                   Choose your Gender :
+            </Label>
+            <ImageButton Grid.Row="1" Grid.Column="1"
+                         Source="superman.png"
+                         Clicked="ManClicked">
+            </ImageButton>
+            <ImageButton Grid.Row="1" Grid.Column="2"
+                         Source="wonder_woman.png"
+                         Clicked="WomanClicked">
+            </ImageButton>
+        </Grid>
+        
+        <Label x:Name="TitleLbl" Grid.Row="0" Grid.ColumnSpan="3"
+               VerticalTextAlignment="Center" HorizontalOptions="Center" FontSize="25" FontFamily="TorusPro">
+               Poo Happens by Nicola Stroffolino
+        </Label>
+        <Grid Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <Label x:Name="GrassLbl" Grid.Column="0"
+                   FontFamily="TorusPro" FontSize="22" VerticalTextAlignment="Center">
+                Grass
+            </Label>
+            <Label x:Name="FliesLbl" Grid.Column="1" 
+                   FontFamily="TorusPro" FontSize="22" VerticalTextAlignment="Center">
+                Flies
+            </Label>
+            <Label x:Name="PoosLbl"  Grid.Column="2"
+                   FontFamily="TorusPro" FontSize="22" VerticalTextAlignment="Center">
+                Poos
+            </Label>
+        </Grid>
+        <Grid x:Name="GridField" Grid.Row="1" Grid.ColumnSpan="10">
+            <!-- Main Grid -->
+        </Grid>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+        <Image x:Name="Shoe1" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0"></Image>
+        <Image x:Name="Shoe2" Grid.Row="2" Grid.RowSpan="2" Grid.Column="1"></Image>
+        <Image x:Name="Shoe3" Grid.Row="2" Grid.RowSpan="2" Grid.Column="2"></Image>
+        <Button x:Name="RestartBtn" Grid.Row="2" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="2"
+                VerticalOptions="Center" HorizontalOptions="Center"
+                Text="Click to Restart"
+                Clicked="Restart">
+        </Button>
+    </Grid>
+    
 </ContentPage>

@@ -49,6 +49,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\TorusPro-Bold.ttf" />
+	  <None Remove="Resources\Fonts\TorusPro-Regular.ttf" />
+	  <None Remove="Resources\Images\cacca.svg" />
+	  <None Remove="Resources\Images\cacca_pestata.png" />
+	  <None Remove="Resources\Images\cartoon_fly.svg" />
+	  <None Remove="Resources\Images\danger.svg" />
+	  <None Remove="Resources\Images\donna_che_pesta.png" />
+	  <None Remove="Resources\Images\erba.svg" />
+	  <None Remove="Resources\Images\erba_bw.svg" />
+	  <None Remove="Resources\Images\high_heel_shoes.svg" />
+	  <None Remove="Resources\Images\poo_happens.svg" />
+	  <None Remove="Resources\Images\scarpa.svg" />
+	  <None Remove="Resources\Images\scarpa_piegata.svg" />
+	  <None Remove="Resources\Images\startup_w_text.svg" />
+	  <None Remove="Resources\Images\superman.svg" />
+	  <None Remove="Resources\Images\wonder_woman.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
