@@ -45,7 +45,7 @@
                          Clicked="WomanClicked">
             </ImageButton>
         </Grid>
-        
+
         <Label x:Name="TitleLbl" Grid.Row="0" Grid.ColumnSpan="3"
                VerticalTextAlignment="Center" HorizontalOptions="Center" FontSize="25" FontFamily="TorusPro">
                Poo Happens by Nicola Stroffolino
