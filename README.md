@@ -62,7 +62,7 @@ for (int k = 0; k < outline.Length; k += 2) {
 
 Un possibile output in console su Visual Studio Code sarà :
 
-![matrix grid.png|350](img/matrix%20grid.png)
+![matrix grid.png|350](Giardino/Resources/Images/matrix%20grid.png)
 
 ### Creazione della Griglia
 
