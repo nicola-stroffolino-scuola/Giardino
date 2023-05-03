@@ -1,4 +1,4 @@
-# Giardino
+# Maui
 
 ## Ambiente di Sviluppo
 
@@ -14,8 +14,6 @@ Al click di una delle celle questa viene scoperta, e se c'è una cacca perdi un 
 Attorno alla cacca ci dovranno essere delle mosche che segnalano il pericolo.
 Hai a disposizione 3 paia di scarpe e una volta esaurite hai perso.
 Per vincere devi essere passato su tutti i blocchi che contengono solamente l'erba verde.
-
-## Setup del Progetto
 
 ## Processo di Sviluppo
 
@@ -49,7 +47,7 @@ int[] outline = {
 	top, j, // Coordinate Casella in Alto
 	top, right, // Coordinate Casella in Alto a Destra
 	i, right, // Coordinate Casella a Destra
-	bottom, right, // Coordinate Casella in Bassso a Destra
+	bottom, right, // Coordinate Casella in Basso a Destra
 	bottom, j, // Coordinate Casella in Basso
 	bottom, left, // Coordinate Casella in Basso a Sinistra
 	i, left, // Coordinate Casella a Sinistra
@@ -64,7 +62,7 @@ for (int k = 0; k < outline.Length; k += 2) {
 
 Un possibile output in console su Visual Studio Code sarà :
 
-![[matrix grid.png|350]]
+![matrix grid.png|350](Giardino/Resources/Images/matrix%20grid.png)
 
 ### Creazione della Griglia
 
@@ -87,7 +85,7 @@ La griglia avrà un `x:Name` che sarà "GridField", ossia il suo nome per venir 
 </Grid>
 ```
 
-E successivamente riempiremo la griglia con degli degli `ImageButton`, ideali per rispondere a dei comandi ogni volta che vengono cliccati.
+E successivamente riempiremo la griglia con degli `ImageButton`, ideali per rispondere a dei comandi ogni volta che vengono cliccati.
 L'immagine che sarà inserita come  `Source` sarà una figura di un ciuffo d'erba in bianco e nero (`erba_bw.png`).
 
 ```cs
@@ -108,4 +106,95 @@ E infine il alla griglia si aggiunge l'`ImageButton`, con la primitiva `Add` , a
 GridField.Add(imgBtn, j, i);
 ```
 
+Tutto ciò ispirato dalla [Documentazione](https://learn.microsoft.com/en-us/dotnet/maui/user-interface/layouts/grid?view=net-maui-7.0) di Microsoft Maui sulle griglie .
+
 ### Gestione dei Passi sul Campo
+
+Ogni volta che un passo viene compiuto sul campo viene eseguita una funzione che ne gestisce il suo esito. La firma della funzione in questione è la seguente :
+
+```cs
+private EventHandler HandleStep(ImageButton imgBtn)
+```
+
+Dal parametro che viene passato alla funzione possiamo estrapolare le coordinate sulla griglia dell'image button che viene cliccato :
+
+```cs
+int imgRow = GridField.GetRow(imgBtn);
+int imgCol = GridField.GetColumn(imgBtn);
+```
+
+All'interno della funzione vengono svolti i principali controlli che gestiscono il funzionamento del gioco. La parte che si occupa della maggior parte della gestione è questa :
+
+```cs
+if (Lives != 0 && (Grass != 0 || Flies != 0)) {
+	switch (Field[imgRow, imgCol]) {
+	case 0:
+		if (Lives != 0) {
+			Lives--;
+			Shoes[Lives].Source = Gender == 'm' ? "cacca_pestata.png" : "donna_che_pesta.png";
+		}
+		Poos--;
+		imgBtn.Source = "cacca.png";
+		break;
+	case 1:
+		Flies--;
+		imgBtn.Source = "cartoon_fly.png";
+		break;
+	case 2:
+		Grass--;
+		imgBtn.Source = "erba.png";
+		break;
+	}
+}
+```
+
+L'istruzione di `if` che racchiude lo `switch` ha il compito di controllare che le vite sul campo **non siano finite** e allo stesso tempo che ci siano ancora dei blocchi di erba o dei blocchi di mosche da pestare. In questo modo se le condizioni sono soddisfatte verrà eseguito lo switch permetterà di controllare il **valore della cella** della matrice corrispondente al **blocco di campo pestato**.
+
+Se il valore della cella è :
+
+- **0** $\rightarrow$ Ti è andata male e hai pestato una cacca. Se hai ancora delle vite allora ne verrà sottratta una e una delle immagini della barra delle vite verrà sostituita con :
+	- L'immagine della donna che pesta se il sesso scelto all'inizio del gioco era **donna**.
+	- L'immagine dell'uomo che pesta se il sesso scelto all'inizio del gioco era **uomo**.
+	
+	Infine il numero delle cacche sul campo diminuirà di 1 e l'immagine della cella pestata diverrà la cacca stessa.
+- **1** $\rightarrow$ Ti è andata bene e hai pestato una mosca. Il contatore delle mosche verrà diminuito di 1 e l'immagine della cella cambiata con quella di una mosca.
+- **2** $\rightarrow$ Ti è andata bene e hai pestato una mosca. Il contatore delle mosche verrà diminuito di 1 e l'immagine della cella cambiata con quella di una mosca.
+
+Infine la vittoria e la sconfitta sono gestiti da questi 2 controlli :
+
+```cs
+ if (Lives == 0) {
+	DisplayAlert("Errore", "Vite Terminate, Impossibile Proseguire", "OK");
+	return;
+}
+
+if (Grass == 0 && Flies == 0) {
+	DisplayAlert("Congratulazioni", "Hai Vinto!", "OK");
+	return;
+}
+```
+
+Dove se le vite sono **0** mostra un messaggio di errore ed esci dal metodo. Invece non hai terminato le vite di conseguenza verrà eseguita il secondo controllo che determinerà la vittoria se non ci sono più blocchi d'erba o mosche disponibili da pestare.
+
+### Attenzione Agli Allegati
+
+Se disponiamo di file **SVG** nella nostra directory delle immagini allora dobbiamo fare attenzione quando li includiamo nel nostro progetto. Siccome la compilazione del codice è destinata alla cartelle **bin** e **obj** il nostro file SVG verrà compilato in un **PNG**. Per questo motivo se avessimo un image button che vorrebbe avere come immagine `erba.svg` dovremmo scriverlo come `erba.png`.
+
+### Dimensione della Finestra
+
+Per aggiungere più opzioni di customizzazione della finestra di gioco ho voluto prendere spunto da questa [Documentazione](https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/windows?view=net-maui-7.0).
+
+```cs
+public partial class App : Application {
+    protected override Window CreateWindow(IActivationState activationState) {
+        Window window = base.CreateWindow(activationState);
+
+        window.Height = 696;
+        window.Width = 896;
+
+        return window;
+    }
+}
+```
+
+La documentazione suggerisce la creazione di una sotto classe `App` che estende la classe `Application` e fa l'override del metodo `createWindow` permettendo di definire una dimensione custom alla finestra.
